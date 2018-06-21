@@ -1,0 +1,54 @@
+<div class="trm-contacts-editor">
+  <mat-card>
+    <ng-container *ngIf="contact | async as contact; else loading">
+      
+      <mat-card-title-group class="fullBleed editing">
+        <img mat-card-md-image [src]="contact.image">
+        <mat-card-title>{{contact.name}}</mat-card-title>
+        <mat-card-subtitle>{{contact.email}}</mat-card-subtitle>
+      </mat-card-title-group>
+      
+      <trm-tabs>
+        <trm-tab title="General" [selected]="true" fxLayout="column">
+          <div fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Name" [(ngModel)]="contact.name">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Email" [(ngModel)]="contact.email">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Phone" [(ngModel)]="contact.phone">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Website" [(ngModel)]="contact.website">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Birthday" [(ngModel)]="contact.birthday" type="date">
+            </mat-form-field>
+          </div>
+        </trm-tab>
+        <trm-tab title="Address" fxLayout="column">
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Street" [(ngModel)]="contact.address.street">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Zip" [(ngModel)]="contact.address.zip">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="City" [(ngModel)]="contact.address.city">
+          </mat-form-field>
+        </trm-tab>
+      </trm-tabs>
+      
+      <mat-card-actions fxLayout fxLayoutAlign="center center">
+        <button mat-button (click)="save(contact)" title="Save contact">Save</button>
+        <button mat-button (click)="cancel(contact)" title="Cancel editing">Cancel</button>
+      </mat-card-actions>
+    </ng-container>
+    <ng-template #loading="">
+      LOADING
+      <!--<mat-spinner diameter="0"></mat-spinner>-->
+    </ng-template>
+  </mat-card>
+</div>

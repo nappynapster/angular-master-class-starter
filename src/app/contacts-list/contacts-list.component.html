@@ -1,0 +1,15 @@
+<mat-list>
+  
+  <mat-toolbar>
+    <mat-form-field color="accent" class="trm-search-container">
+      <!--<input matInput type="text" (input)="terms$.next($event.target.value)">-->
+      <input matInput type="text" [formControl]="searchField">
+    </mat-form-field>
+    <mat-icon color="accent">search</mat-icon>
+  </mat-toolbar>
+  
+  <a mat-list-item *ngFor="let contact of contacts | async; trackBy: trackByContact" [routerLink]="['contact', contact.id]">
+    <img mat-list-avatar bind-src="contact.image" alt="Picture of {{contact.name}}">
+    <h3 mat-line>{{contact.name}}</h3>
+  </a>
+</mat-list>

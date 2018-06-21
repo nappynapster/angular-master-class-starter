@@ -1,0 +1,10 @@
+<ng-container *ngIf="contact$ | async as contact; else loading">
+  <trm-contacts-detail [contact]="contact"
+                       (edit)="navigateToEditor($event)"
+                       (back)="navigateToList()">
+  </trm-contacts-detail>
+</ng-container>
+<ng-template #loading="">
+  <mat-spinner></mat-spinner>
+</ng-template>
+
