@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  ContentChildren,
+  QueryList
+} from '@angular/core';
 import { TabComponent } from '../tab/tab.component';
 
 @Component({
@@ -6,12 +11,25 @@ import { TabComponent } from '../tab/tab.component';
   templateUrl: './tabs.component.html',
   styleUrls:   ['./tabs.component.css']
 })
-export class TabsComponent
+export class TabsComponent implements AfterContentInit
 {
-  protected tabs: Array<any> = [];
+  // eine Component angeben oder #NAME in einem HTML Element
+  @ContentChildren(TabComponent)
+  protected tabs: QueryList<TabComponent>;
 
   constructor()
   {
+  }
+
+  ngAfterContentInit()
+  {
+    this.select(this.tabs.first);
+
+    // triggers each time the query changes
+    this.tabs.changes.subscribe(() =>
+    {
+
+    });
   }
 
   protected select(tab: TabComponent): void
@@ -19,10 +37,5 @@ export class TabsComponent
     this.tabs.forEach((tab) => tab.selected = false);
 
     tab.selected = true;
-  }
-
-  public addTab(tab: TabComponent)
-  {
-    this.tabs.push(tab);
   }
 }
