@@ -9,6 +9,8 @@ import {
 } from '@angular/router';
 import { Contact } from '../models/contact';
 import { Observable } from 'rxjs/internal/Observable';
+import { EventBusService } from '../event-bus.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector:    'trm-contacts-detail-view',
@@ -21,6 +23,7 @@ export class ContactsDetailViewComponent implements OnInit
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
+              private eventBusService: EventBusService,
               private contactsService: ContactsService)
   {
   }
@@ -29,7 +32,9 @@ export class ContactsDetailViewComponent implements OnInit
   {
     let contactId = this.activatedRoute.snapshot.paramMap.get('id');
 
-    this.contact$ = this.contactsService.getContact(contactId);
+    this.contact$ = this.contactsService.getContact(contactId).pipe(
+      tap((x) => this.eventBusService.emit('appTitleChange', 'Contact details \'' + x.name + '\''))
+    );
   }
 
   protected navigateToEditor()

@@ -7,6 +7,7 @@ import { Contact } from '../models/contact';
 import { Observable } from 'rxjs/internal/Observable';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs/internal/Subject';
+import { EventBusService } from '../event-bus.service';
 
 function log()
 {
@@ -30,12 +31,15 @@ export class ContactsListComponent implements OnInit
 
   private destroy$ = new Subject<string>();
 
-  constructor(private contactsService: ContactsService)
+  constructor(private contactsService: ContactsService,
+              private eventBusService: EventBusService)
   {
   }
 
   ngOnInit()
   {
+    this.eventBusService.emit('appTitleChange', 'Contact List');
+
     //this.contacts = this.contactsService.getContacts();
 
     //this.terms$.pipe(
