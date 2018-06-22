@@ -10,7 +10,10 @@ import {
 import { Contact } from '../models/contact';
 import { Observable } from 'rxjs/internal/Observable';
 import { EventBusService } from '../event-bus.service';
-import { tap } from 'rxjs/operators';
+import {
+  switchMap,
+  tap
+} from 'rxjs/operators';
 
 @Component({
   selector:    'trm-contacts-detail-view',
@@ -30,10 +33,21 @@ export class ContactsDetailViewComponent implements OnInit
 
   ngOnInit()
   {
-    let contactId = this.activatedRoute.snapshot.paramMap.get('id');
+    //this.activatedRoute.params.subscribe((params: Params) =>
+    //{
+    //  this.contact$ = this.contactsService.getContact(params['id']).pipe(
+    //    tap((x) => this.eventBusService.emit('appTitleChange', 'Contact details \'' + x.name + '\''))
+    //  );
+    //});
 
-    this.contact$ = this.contactsService.getContact(contactId).pipe(
-      tap((x) => this.eventBusService.emit('appTitleChange', 'Contact details \'' + x.name + '\''))
+    //same as above
+    this.contact$ = this.activatedRoute.params.pipe(
+      switchMap((params) =>
+      {
+        return this.contactsService.getContact(params['id']).pipe(
+          tap((x) => this.eventBusService.emit('appTitleChange', 'Contact details \'' + x.name + '\''))
+        );
+      })
     );
   }
 

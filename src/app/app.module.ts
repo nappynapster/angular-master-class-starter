@@ -24,6 +24,8 @@ import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-det
 import { TabsComponent } from './tabs/tabs/tabs.component';
 import { TabComponent } from './tabs/tab/tab.component';
 import { EventBusService } from './event-bus.service';
+import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashboard.component';
+import { AboutComponent } from './about/about.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { EventBusService } from './event-bus.service';
     ContactsEditorComponent,
     ContactsDetailViewComponent,
     TabsComponent,
-    TabComponent
+    TabComponent,
+    ContactsDashboardComponent,
+    AboutComponent
   ],
   imports:      [
     BrowserModule,

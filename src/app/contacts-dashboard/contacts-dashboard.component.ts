@@ -3,14 +3,13 @@ import {
   OnInit
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { EventBusService } from './event-bus.service';
+import { EventBusService } from '../event-bus.service';
 
 @Component({
-  selector:    'trm-contacts-app',
-  templateUrl: './app.component.html',
-  styleUrls:   ['./app.component.scss']
+  selector:    'trm-contacts-dashboard',
+  templateUrl: './contacts-dashboard.component.html'
 })
-export class ContactsAppComponent implements OnInit
+export class ContactsDashboardComponent implements OnInit
 {
   protected title = 'Angular Master Class';
 
@@ -28,4 +27,5 @@ export class ContactsAppComponent implements OnInit
           this.titleService.setTitle(title);
         });
   }
+
 }
