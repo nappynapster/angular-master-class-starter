@@ -9,7 +9,10 @@ import { ContactsMaterialModule } from './contacts-material.module';
 
 import { ContactsAppComponent } from './app.component';
 import { ContactsService } from './contacts.service';
-import { RouterModule } from '@angular/router';
+import {
+  PreloadAllModules,
+  RouterModule
+} from '@angular/router';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
 import { APP_ROUTES } from './app.routes';
 import { ContactDetailComponent } from './contact-detail/contact-detail.component';
@@ -25,7 +28,7 @@ import { TabsComponent } from './tabs/tabs/tabs.component';
 import { TabComponent } from './tabs/tab/tab.component';
 import { EventBusService } from './event-bus.service';
 import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashboard.component';
-import { AboutComponent } from './about/about.component';
+import { ContactsResolver } from './shared/contacts.resolver';
 
 
 @NgModule({
@@ -37,8 +40,7 @@ import { AboutComponent } from './about/about.component';
     ContactsDetailViewComponent,
     TabsComponent,
     TabComponent,
-    ContactsDashboardComponent,
-    AboutComponent
+    ContactsDashboardComponent
   ],
   imports:      [
     BrowserModule,
@@ -48,7 +50,9 @@ import { AboutComponent } from './about/about.component';
     ContactsMaterialModule,
     FlexLayoutModule,
     MatProgressSpinnerModule,
-    RouterModule.forRoot(APP_ROUTES),
+    RouterModule.forRoot(APP_ROUTES, {
+      preloadingStrategy: PreloadAllModules
+    }),
     ReactiveFormsModule
   ],
   providers:    [
@@ -58,7 +62,13 @@ import { AboutComponent } from './about/about.component';
     {
       provide:  'API_ENDPOINT',
       useValue: 'http://localhost:4201/api/'
-    }
+    },
+    {
+      provide:  'ConfirmNavigationGuard',
+      useValue: doConfirm
+    },
+    ContactsResolver
+
   ],
   bootstrap:    [ContactsAppComponent]
 })
@@ -66,3 +76,12 @@ export class ContactsModule
 {
 
 }
+
+export function doConfirm(component)
+{
+  console.log(component.warnOnClosing);
+
+  return false;
+}
+
+
